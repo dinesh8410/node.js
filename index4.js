@@ -5,6 +5,7 @@ const PORT = 3000;
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.use(express.urlencoded({ extended: false }));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
@@ -34,4 +35,15 @@ app.get("/about", (req, res) => {
     message: "Welcome to the about page!",
     users: users,
   });
+});
+
+app.get("/form", (req, res) => {
+  res.render("form", { message: null });
+});
+
+app.post("/submit", (req, res) => {
+  const name = req.body.myname;
+
+  const message = `Hello, ${name} You submited the form`;
+  res.render("form", { message: message });
 });
